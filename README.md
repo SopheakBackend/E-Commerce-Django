@@ -1,10 +1,10 @@
-# 🛒 Hybrid Django E-Commerce Platform
+#  Hybrid Django E-Commerce Platform
 
 A robust E-Commerce application utilizing a **hybrid backend architecture**. It seamlessly combines **Pure Django (Server-Side Rendered Templates)** with a decoupled **Django REST Framework (DRF) API** for ultimate client flexibility. The application securely manages complex business workflows including dynamic shopping carts, coupon mechanics, asynchronous order queues, and direct payment processing.
 
 ---
 
-## 🚀 Key Modules & Architecture
+##  Key Modules & Architecture
 
 - **Hybrid Setup:** Implements standard Django views alongside a RESTful API ecosystem (`/api/`) for versatile frontend integrations.
 - **Cart & Coupon System (`cart/`, `coupons/`):** Manages live shopping cart state variables and processes absolute/percentage discount codes.
@@ -13,7 +13,7 @@ A robust E-Commerce application utilizing a **hybrid backend architecture**. It 
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 - **Frameworks:** Django & Django REST Framework (DRF)
 - **Asynchronous Task Queue:** Celery & RabbitMQ
@@ -23,7 +23,7 @@ A robust E-Commerce application utilizing a **hybrid backend architecture**. It 
 
 ---
 
-## 📂 Project Structure
+##  Project Structure
 
 ```text
 ├── api/             # Django REST Framework API controllers and serializers
@@ -39,7 +39,7 @@ A robust E-Commerce application utilizing a **hybrid backend architecture**. It 
 
 ---
 
-## ⚙️ Development Environment Setup
+##  Development Environment Setup
 
 Because this project relies on specialized local services, follow these specific instructions to spin up the infrastructure background processes manually in your terminal windows.
 
@@ -61,32 +61,32 @@ python manage.py migrate
 ### Step 2: Spin Up Infrastructure Terminals
 Open **five separate terminal windows/panes** to operate the multi-service pipeline:
 
-#### 💻 Terminal 1: Launch Redis (Sorted Sets Backend)
+####  Terminal 1: Launch Redis (Sorted Sets Backend)
 Run the exact version-pinned Redis image using Docker to serve your sorting and ranking tasks:
 ```bash
 docker run -it --rm --name redis -p 6379:6379 redis:7.2.4
 ```
 
-#### 🐇 Terminal 2: Launch RabbitMQ (Message Broker)
+####  Terminal 2: Launch RabbitMQ (Message Broker)
 Run the RabbitMQ container with the management plugin dashboard active:
 ```bash
 docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3.13.1-management
 ```
 
-#### 💳 Terminal 3: Listen for Stripe Webhook Events
+####  Terminal 3: Listen for Stripe Webhook Events
 Tunnel live Stripe asynchronous event payloads directly down into your local running Django development node application endpoint:
 ```bash
 stripe.exe listen --forward-to localhost:8000/payment/webhook/
 ```
 *(Copy the generated webhook signing secret returned in the console output and paste it into your local configurations).*
 
-#### ⚙️ Terminal 4: Start Celery Worker Tasks inside your VS CODE terminal
+####  Terminal 4: Start Celery Worker Tasks inside your VS CODE terminal
 Launch your asynchronous engine worker instance with the `solo` pool execution flag (optimized for Windows machines):
 ```bash
 celery -A myshop worker --pool=solo -l info
 ```
 
-#### 🐍 Terminal 5: Run the Django Development Web Server
+####  Terminal 5: Run the Django Development Web Server
 Do not forget to generate a django secret key inside the setting.py
 ```bash
 python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
